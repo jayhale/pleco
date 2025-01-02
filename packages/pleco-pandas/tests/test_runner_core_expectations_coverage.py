@@ -31,4 +31,4 @@ def test_runner_core_expectations_coverage(runner: PandasRunner):
         + "\n".join(f" - {e[0]}" for e in unsupported_expectations)
     )
     supported_percent = len(supported_expectations) * 100.0 / len(core_expectations)
-    assert supported_percent >= 20.0
+    assert supported_percent >= 50.0
