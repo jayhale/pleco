@@ -1,0 +1,22 @@
+[project]
+name = "pleco"
+version = "0.0.0"
+description = "Straightforward data validation"
+readme = "README.md"
+authors = [
+    { name = "James Hale", email = "james+pleco@hale.zip" }
+]
+requires-python = ">=3.9"
+dependencies = [
+    "pydantic>=2.10.4",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.ruff.lint]
+extend-select = ["I", "RUF022"]
+
+[tool.uv.workspace]
+members = ["packages/pleco-pandas"]
