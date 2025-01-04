@@ -24,7 +24,11 @@ from .column_expectations import (
     expect_column_values_to_be_unique,
     expect_column_values_to_not_be_null,
 )
-from .table_expectations import expect_table_column_count, expect_table_row_count
+from .table_expectations import (
+    expect_table_column_count,
+    expect_table_columns_to_match_ordered_list,
+    expect_table_row_count,
+)
 
 
 class PandasRunnerBase(Runner):
@@ -95,5 +99,9 @@ builder.register(
     pleco.ExpectColumnValuesToNotBeNull, expect_column_values_to_not_be_null
 )
 builder.register(pleco.ExpectTableColumnCount, expect_table_column_count)
+builder.register(
+    pleco.ExpectTableColumnsToMatchOrderedList,
+    expect_table_columns_to_match_ordered_list,
+)
 builder.register(pleco.ExpectTableRowCount, expect_table_row_count)
 PandasRunner = builder.build()
