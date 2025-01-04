@@ -24,7 +24,7 @@ from .column_expectations import (
     expect_column_values_to_be_unique,
     expect_column_values_to_not_be_null,
 )
-from .table_expectations import expect_table_column_count
+from .table_expectations import expect_table_column_count, expect_table_row_count
 
 
 class PandasRunnerBase(Runner):
@@ -95,4 +95,5 @@ builder.register(
     pleco.ExpectColumnValuesToNotBeNull, expect_column_values_to_not_be_null
 )
 builder.register(pleco.ExpectTableColumnCount, expect_table_column_count)
+builder.register(pleco.ExpectTableRowCount, expect_table_row_count)
 PandasRunner = builder.build()
