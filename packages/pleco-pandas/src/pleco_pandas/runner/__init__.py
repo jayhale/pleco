@@ -1,5 +1,6 @@
 from inspect import isclass
-from typing import Callable, Dict, Type, Union
+from typing import Callable, Type, Union
+from weakref import WeakKeyDictionary
 
 from pandas import DataFrame
 
@@ -26,82 +27,76 @@ from .column_expectations import (
 )
 from .table_expectations import (
     expect_table_column_count,
+    expect_table_columns_to_be_in_set,
     expect_table_columns_to_match_ordered_list,
     expect_table_row_count,
 )
 
+PandasHandler = Callable[[Expectation, DataFrame], Result]
 
-class PandasRunnerBase(Runner):
+
+class HandlerAlreadyRegistered(RuntimeError):
+    """An expectation has already been registered with the runner"""
+
+    pass
+
+
+class PandasRunner(Runner):
     """Run expectations against a Pandas DataFrame"""
 
-    _handler_registry: Dict[str, Callable[[Expectation, DataFrame], Result]] = {}
+    _handlers = WeakKeyDictionary(
+        {
+            pleco.ExpectColumnDistinctValuesToBeInSet: expect_column_distinct_values_to_be_in_set,
+            pleco.ExpectColumnDistinctValuesToContainSet: expect_column_distinct_values_to_contain_set,
+            pleco.ExpectColumnDistinctValuesToEqualSet: expect_column_distinct_values_to_equal_set,
+            pleco.ExpectColumnMax: expect_column_max,
+            pleco.ExpectColumnMean: expect_column_mean,
+            pleco.ExpectColumnMedian: expect_column_median,
+            pleco.ExpectColumnMin: expect_column_min,
+            pleco.ExpectColumnMode: expect_column_mode,
+            pleco.ExpectColumnQuantile: expect_column_quantile,
+            pleco.ExpectColumnValuesToBeUnique: expect_column_values_to_be_unique,
+            pleco.ExpectColumnValuesToNotBeNull: expect_column_values_to_not_be_null,
+            pleco.ExpectTableColumnCount: expect_table_column_count,
+            pleco.ExpectTableColumnsToBeInSet: expect_table_columns_to_be_in_set,
+            pleco.ExpectTableColumnsToMatchOrderedList: expect_table_columns_to_match_ordered_list,
+            pleco.ExpectTableRowCount: expect_table_row_count,
+        }
+    )
 
     def run_expectation(self, expectation: Expectation, data: DataFrame) -> Result:
-        if expectation.__class__.__name__ not in self._handler_registry:
+        if expectation.__class__ not in self._handlers:
             raise ExpectationNotSupportedByRunner(
                 f"expectation {type(expectation)} is not supported by PandasRunner"
             )
 
-        handler = self._handler_registry[expectation.__class__.__name__]
+        handler = self._handlers[expectation.__class__]
         return handler(expectation, data)
 
     def supports(self, expectation: Union[Expectation, Type[Expectation]]) -> bool:
         if isclass(expectation):
-            return expectation.__name__ in self._handler_registry
-        return expectation.__class__.__name__ in self._handler_registry
+            return expectation in self._handlers
+        return expectation.__class__ in self._handlers
 
-
-class PandasRunnerBuilder:
-    """Construct a PandasRunner from expectation handlers"""
-
-    def __init__(self):
-        self._handler_registry = {}
-
-    def build(self) -> Type[Runner]:
-        class C(PandasRunnerBase):
-            _handler_registry = self._handler_registry
-
-        return C
-
-    def register(
-        self,
-        expectation_class: Type[Expectation],
-        handler: Callable[[Expectation, DataFrame], Result],
-    ):
-        if expectation_class.__name__ in self._handler_registry:
-            raise RuntimeError(
-                f"expectation {expectation_class.__name__} already registered"
+    def add_handler(
+        self, expectation: Union[Expectation, Type[Expectation]], handler: PandasHandler
+    ) -> None:
+        klass = expectation if isclass(expectation) else type(expectation)
+        if klass in self._handlers:
+            raise HandlerAlreadyRegistered(
+                f"{klass} already registered in PandasRunner"
             )
-        self._handler_registry[expectation_class.__name__] = handler
+        self._handlers[klass] = handler
 
+    def remove_handler(
+        self, expectation: Union[Expectation, Type[Expectation]]
+    ) -> None:
+        klass = expectation if isclass(expectation) else type(expectation)
+        if klass in self._handlers:
+            del self._handlers[klass]
 
-builder = PandasRunnerBuilder()
-builder.register(
-    pleco.ExpectColumnDistinctValuesToBeInSet,
-    expect_column_distinct_values_to_be_in_set,
-)
-builder.register(
-    pleco.ExpectColumnDistinctValuesToContainSet,
-    expect_column_distinct_values_to_contain_set,
-)
-builder.register(
-    pleco.ExpectColumnDistinctValuesToEqualSet,
-    expect_column_distinct_values_to_equal_set,
-)
-builder.register(pleco.ExpectColumnMax, expect_column_max)
-builder.register(pleco.ExpectColumnMean, expect_column_mean)
-builder.register(pleco.ExpectColumnMedian, expect_column_median)
-builder.register(pleco.ExpectColumnMin, expect_column_min)
-builder.register(pleco.ExpectColumnMode, expect_column_mode)
-builder.register(pleco.ExpectColumnQuantile, expect_column_quantile)
-builder.register(pleco.ExpectColumnValuesToBeUnique, expect_column_values_to_be_unique)
-builder.register(
-    pleco.ExpectColumnValuesToNotBeNull, expect_column_values_to_not_be_null
-)
-builder.register(pleco.ExpectTableColumnCount, expect_table_column_count)
-builder.register(
-    pleco.ExpectTableColumnsToMatchOrderedList,
-    expect_table_columns_to_match_ordered_list,
-)
-builder.register(pleco.ExpectTableRowCount, expect_table_row_count)
-PandasRunner = builder.build()
+    def replace_handler(
+        self, expectation: Union[Expectation, Type[Expectation]], handler: PandasHandler
+    ) -> None:
+        self.remove_handler(expectation)
+        self.add_handler(expectation, handler)
