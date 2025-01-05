@@ -27,6 +27,7 @@ from .column_expectations import (
     expect_column_values_to_not_be_in_set,
     expect_column_values_to_not_be_null,
 )
+from .multi_column_expectations import expect_multi_column_sum
 from .table_expectations import (
     expect_column_to_exist,
     expect_table_column_count,
@@ -69,12 +70,19 @@ class PandasRunner(pleco.Runner):
             pleco.ExpectColumnValuesToBeUnique: expect_column_values_to_be_unique,
             pleco.ExpectColumnValuesToNotBeInSet: expect_column_values_to_not_be_in_set,
             pleco.ExpectColumnValuesToNotBeNull: expect_column_values_to_not_be_null,
+            pleco.ExpectMultiColumnSum: expect_multi_column_sum,
             pleco.ExpectTableColumnCount: expect_table_column_count,
             pleco.ExpectTableColumnsToBeInSet: expect_table_columns_to_be_in_set,
             pleco.ExpectTableColumnsToMatchOrderedList: expect_table_columns_to_match_ordered_list,
             pleco.ExpectTableRowCount: expect_table_row_count,
         }
     )
+
+    @overload
+    def run_expectation(
+        self, expectation: pleco.RecordCountExpectation, data: DataFrame
+    ) -> pleco.RecordCountResult:
+        pass
 
     @overload
     def run_expectation(

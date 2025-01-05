@@ -1,4 +1,4 @@
-from typing import Any, Set, Tuple
+from typing import Any, List, Set, Tuple
 
 from ..expectation import RecordCountExpectation, ValueExpectation
 
@@ -28,22 +28,22 @@ class ExpectColumnPairValuesToBeInSet(RecordCountExpectation):
 class ExpectCompoundColumnsToBeUnique(RecordCountExpectation):
     """Expect a compound set of columns to be unique together"""
 
-    columns: Set[str]
+    columns: List[str]
 
 
-class ExpectMulticolumnSum(ValueExpectation):
+class ExpectMultiColumnSum(ValueExpectation):
     """Expect the sum of values from a set of columns"""
 
-    columns: Set[str]
+    columns: List[str]
 
 
-class ExpectMulticolumnValuesToBeUnique(RecordCountExpectation):
+class ExpectMultiColumnValuesToBeUnique(RecordCountExpectation):
     """Expect values from multiple columns to be unique"""
 
-    columns: Set[str]
+    columns: List[str]
 
 
-class ExpectMulticolumnValuesToBeUniqueWithinRecord(RecordCountExpectation):
+class ExpectMultiColumnValuesToBeUniqueWithinRecord(RecordCountExpectation):
     """Expect the values from specified columns to be unique within the row"""
 
-    columns: Set[str]
+    columns: List[str]
