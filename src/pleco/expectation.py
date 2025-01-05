@@ -7,6 +7,8 @@ from .threshold import RecordCountThreshold, ValueThreshold
 
 
 class Severity(IntEnum):
+    """The severity of an expectation failure"""
+
     WARN = 10
     ERROR = 20
     RAISE = 30

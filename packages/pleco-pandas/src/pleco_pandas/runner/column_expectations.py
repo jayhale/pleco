@@ -116,6 +116,15 @@ def expect_column_values_to_be_between(
     return expectation.build_result(observation_count, failure_count)
 
 
+def expect_column_values_to_be_null(
+    expectation: pleco.ExpectColumnValuesToBeNull, data: pd.DataFrame
+) -> pleco.RecordCountResult:
+    series = data[expectation.column]
+    observation_count = series.shape[0]
+    failure_count = (~series.isnull()).sum()
+    return expectation.build_result(observation_count, failure_count)
+
+
 def expect_column_values_to_be_unique(
     expectation: pleco.ExpectColumnValuesToBeUnique, data: pd.DataFrame
 ) -> pleco.RecordCountResult:
