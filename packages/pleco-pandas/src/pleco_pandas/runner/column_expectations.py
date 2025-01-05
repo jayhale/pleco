@@ -96,6 +96,15 @@ def expect_column_quantile(
     return expectation.build_result(observation_count, observed_value)
 
 
+def expect_column_standard_deviation(
+    expectation: pleco.ExpectColumnStandardDeviation, data: pd.DataFrame
+) -> pleco.ValueResult:
+    series = data[expectation.column]
+    observation_count = series.shape[0]
+    observed_value = series.std()
+    return expectation.build_result(observation_count, observed_value)
+
+
 def expect_column_sum(
     expectation: pleco.ExpectColumnSum, data: pd.DataFrame
 ) -> pleco.ValueResult:
