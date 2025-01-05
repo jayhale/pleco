@@ -1,7 +1,4 @@
 from .core.column_expectations import (
-    ExpectColumnDistinctValuesToBeInSet,
-    ExpectColumnDistinctValuesToContainSet,
-    ExpectColumnDistinctValuesToEqualSet,
     ExpectColumnKLDivergence,
     ExpectColumnMax,
     ExpectColumnMean,
@@ -24,6 +21,8 @@ from .core.column_expectations import (
     ExpectColumnValuesToBeNull,
     ExpectColumnValuesToBeOfType,
     ExpectColumnValuesToBeUnique,
+    ExpectColumnValuesToContainSet,
+    ExpectColumnValuesToEqualSet,
     ExpectColumnValuesToMatchJsonSchema,
     ExpectColumnValuesToMatchLikePattern,
     ExpectColumnValuesToMatchLikePatternSet,
@@ -70,9 +69,6 @@ from .suite import Suite
 from .threshold import RecordCountThreshold, ValueThreshold
 
 __all__ = [
-    "ExpectColumnDistinctValuesToBeInSet",
-    "ExpectColumnDistinctValuesToContainSet",
-    "ExpectColumnDistinctValuesToEqualSet",
     "ExpectColumnKLDivergence",
     "ExpectColumnMax",
     "ExpectColumnMean",
@@ -100,6 +96,8 @@ __all__ = [
     "ExpectColumnValuesToBeNull",
     "ExpectColumnValuesToBeOfType",
     "ExpectColumnValuesToBeUnique",
+    "ExpectColumnValuesToContainSet",
+    "ExpectColumnValuesToEqualSet",
     "ExpectColumnValuesToMatchJsonSchema",
     "ExpectColumnValuesToMatchLikePattern",
     "ExpectColumnValuesToMatchLikePatternSet",

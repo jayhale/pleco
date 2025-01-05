@@ -3,21 +3,21 @@ from typing import Any, Optional, Set
 from ..expectation import RecordCountExpectation, ValueExpectation
 
 
-class ExpectColumnDistinctValuesToBeInSet(RecordCountExpectation):
+class ExpectColumnValuesToBeInSet(RecordCountExpectation):
     """Expect column distinct values to be in set"""
 
     column: str
     value_set: Set[Any]
 
 
-class ExpectColumnDistinctValuesToContainSet(RecordCountExpectation):
+class ExpectColumnValuesToContainSet(RecordCountExpectation):
     """Expect column distinct values to contain set"""
 
     column: str
     value_set: Set[Any]
 
 
-class ExpectColumnDistinctValuesToEqualSet(RecordCountExpectation):
+class ExpectColumnValuesToEqualSet(RecordCountExpectation):
     """Expect column distinct values to equal set"""
 
     column: str
@@ -126,13 +126,6 @@ class ExpectColumnValuesToBeDecreasing(RecordCountExpectation):
     """Expect the values in a column to be decreasing"""
 
     column: str
-
-
-class ExpectColumnValuesToBeInSet(RecordCountExpectation):
-    """Expect the values in a column to be in a specified set"""
-
-    column: str
-    value_set: Set[Any]
 
 
 class ExpectColumnValuesToBeInTypeSet(RecordCountExpectation):

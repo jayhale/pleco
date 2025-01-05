@@ -52,9 +52,9 @@ class PandasRunner(Runner):
 
     _handlers = WeakKeyDictionary(
         {
-            pleco.ExpectColumnDistinctValuesToBeInSet: expect_column_distinct_values_to_be_in_set,
-            pleco.ExpectColumnDistinctValuesToContainSet: expect_column_distinct_values_to_contain_set,
-            pleco.ExpectColumnDistinctValuesToEqualSet: expect_column_distinct_values_to_equal_set,
+            pleco.ExpectColumnValuesToBeInSet: expect_column_distinct_values_to_be_in_set,
+            pleco.ExpectColumnValuesToContainSet: expect_column_distinct_values_to_contain_set,
+            pleco.ExpectColumnValuesToEqualSet: expect_column_distinct_values_to_equal_set,
             pleco.ExpectColumnMax: expect_column_max,
             pleco.ExpectColumnMean: expect_column_mean,
             pleco.ExpectColumnMedian: expect_column_median,

@@ -5,7 +5,7 @@ import pleco
 
 
 def expect_column_distinct_values_to_be_in_set(
-    expectation: pleco.ExpectColumnDistinctValuesToBeInSet, data: pd.DataFrame
+    expectation: pleco.ExpectColumnValuesToBeInSet, data: pd.DataFrame
 ) -> pleco.RecordCountResult:
     series = data[expectation.column]
     observation_count = series.shape[0]
@@ -14,7 +14,7 @@ def expect_column_distinct_values_to_be_in_set(
 
 
 def expect_column_distinct_values_to_contain_set(
-    expectation: pleco.ExpectColumnDistinctValuesToContainSet, data: pd.DataFrame
+    expectation: pleco.ExpectColumnValuesToContainSet, data: pd.DataFrame
 ) -> pleco.RecordCountResult:
     series = data[expectation.column]
     observed_set = series.unique()
@@ -26,7 +26,7 @@ def expect_column_distinct_values_to_contain_set(
 
 
 def expect_column_distinct_values_to_equal_set(
-    expectation: pleco.ExpectColumnDistinctValuesToEqualSet, data: pd.DataFrame
+    expectation: pleco.ExpectColumnValuesToEqualSet, data: pd.DataFrame
 ) -> pleco.RecordCountResult:
     series = data[expectation.column]
     observed_set = series.unique()
