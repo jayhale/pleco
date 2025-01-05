@@ -1,23 +1,23 @@
 from typing import Any, Optional, Set
 
-from ..expectation import CountExpectation, ValueExpectation
+from ..expectation import RecordCountExpectation, ValueExpectation
 
 
-class ExpectColumnDistinctValuesToBeInSet(CountExpectation):
+class ExpectColumnDistinctValuesToBeInSet(RecordCountExpectation):
     """Expect column distinct values to be in set"""
 
     column: str
     value_set: Set[Any]
 
 
-class ExpectColumnDistinctValuesToContainSet(CountExpectation):
+class ExpectColumnDistinctValuesToContainSet(RecordCountExpectation):
     """Expect column distinct values to contain set"""
 
     column: str
     value_set: Set[Any]
 
 
-class ExpectColumnDistinctValuesToEqualSet(CountExpectation):
+class ExpectColumnDistinctValuesToEqualSet(RecordCountExpectation):
     """Expect column distinct values to equal set"""
 
     column: str
@@ -91,7 +91,7 @@ class ExpectColumnUniqueValueCount(ValueExpectation):
     column: str
 
 
-class ExpectColumnValueLengthsToBeBetween(CountExpectation):
+class ExpectColumnValueLengthsToBeBetween(RecordCountExpectation):
     """Expect the length of values in a column to fall in a specified range"""
 
     column: str
@@ -99,14 +99,14 @@ class ExpectColumnValueLengthsToBeBetween(CountExpectation):
     length_max: Optional[int] = None
 
 
-class ExpectColumnValueLengthsToEqual(CountExpectation):
+class ExpectColumnValueLengthsToEqual(RecordCountExpectation):
     """Expect the length of values in a column"""
 
     column: str
     length: int
 
 
-class ExpectColumnValueZScoresToBeBetween(CountExpectation):
+class ExpectColumnValueZScoresToBeBetween(RecordCountExpectation):
     """Expect the Z-score for values in a column to be in a specified range"""
 
     column: str
@@ -114,7 +114,7 @@ class ExpectColumnValueZScoresToBeBetween(CountExpectation):
     zscore_min: Optional[float]
 
 
-class ExpectColumnValuesToBeBetween(CountExpectation):
+class ExpectColumnValuesToBeBetween(RecordCountExpectation):
     """Expect the values in a column to be in a specified range"""
 
     column: str
@@ -122,134 +122,134 @@ class ExpectColumnValuesToBeBetween(CountExpectation):
     value_max: Optional[float]
 
 
-class ExpectColumnValuesToBeDecreasing(CountExpectation):
+class ExpectColumnValuesToBeDecreasing(RecordCountExpectation):
     """Expect the values in a column to be decreasing"""
 
     column: str
 
 
-class ExpectColumnValuesToBeInSet(CountExpectation):
+class ExpectColumnValuesToBeInSet(RecordCountExpectation):
     """Expect the values in a column to be in a specified set"""
 
     column: str
     value_set: Set[Any]
 
 
-class ExpectColumnValuesToBeInTypeSet(CountExpectation):
+class ExpectColumnValuesToBeInTypeSet(RecordCountExpectation):
     """Expect the values in a column to be of a specified set of types"""
 
     column: str
     type_set: Set[Any]
 
 
-class ExpectColumnValuesToBeIncreasing(CountExpectation):
+class ExpectColumnValuesToBeIncreasing(RecordCountExpectation):
     """Expect the values in a column to be increasing"""
 
     column: str
 
 
-class ExpectColumnValuesToBeJsonParseable(CountExpectation):
+class ExpectColumnValuesToBeJsonParseable(RecordCountExpectation):
     """Expect the values in a column to be valid JSON"""
 
     column: str
 
 
-class ExpectColumnValuesToBeNull(CountExpectation):
+class ExpectColumnValuesToBeNull(RecordCountExpectation):
     """Expect the values in a column to be null"""
 
     column: str
 
 
-class ExpectColumnValuesToBeOfType(CountExpectation):
+class ExpectColumnValuesToBeOfType(RecordCountExpectation):
     """Expect the values in a column to be of a specified type"""
 
     column: str
     type: Any
 
 
-class ExpectColumnValuesToBeUnique(CountExpectation):
+class ExpectColumnValuesToBeUnique(RecordCountExpectation):
     """Expect column values to be unique"""
 
     column: str
 
 
-class ExpectColumnValuesToMatchJsonSchema(CountExpectation):
+class ExpectColumnValuesToMatchJsonSchema(RecordCountExpectation):
     """Expect values in a column to conform to a specified JSON schema"""
 
     column: str
     json_schema: str
 
 
-class ExpectColumnValuesToMatchLikePattern(CountExpectation):
+class ExpectColumnValuesToMatchLikePattern(RecordCountExpectation):
     """Expect values in a column to match a LIKE pattern"""
 
     column: str
     pattern: str
 
 
-class ExpectColumnValuesToMatchLikePatternSet(CountExpectation):
+class ExpectColumnValuesToMatchLikePatternSet(RecordCountExpectation):
     """Expect values in a column to match a set of LIKE patterns"""
 
     column: str
     patterns: Set[str]
 
 
-class ExpectColumnValuesToMatchRegex(CountExpectation):
+class ExpectColumnValuesToMatchRegex(RecordCountExpectation):
     """Expect values in a column to match a RegEx pattern"""
 
     column: str
     pattern: str
 
 
-class ExpectColumnValuesToMatchRegexSet(CountExpectation):
+class ExpectColumnValuesToMatchRegexSet(RecordCountExpectation):
     """Expect values in a column to match a set of RegEx patterns"""
 
     column: str
     patterns: Set[str]
 
 
-class ExpectColumnValuesToMatchStrftimeFormat(CountExpectation):
+class ExpectColumnValuesToMatchStrftimeFormat(RecordCountExpectation):
     """Expect values in a column to match a strftime format"""
 
     column: str
     format: str
 
 
-class ExpectColumnValuesToNotBeInSet(CountExpectation):
+class ExpectColumnValuesToNotBeInSet(RecordCountExpectation):
     """Expect values in a column to not be in a specified set"""
 
     column: str
     value_set: Set[Any]
 
 
-class ExpectColumnValuesToNotBeNull(CountExpectation):
+class ExpectColumnValuesToNotBeNull(RecordCountExpectation):
     """Expect column values to not be null"""
 
     column: str
 
 
-class ExpectColumnValuesToNotMatchLikePattern(CountExpectation):
+class ExpectColumnValuesToNotMatchLikePattern(RecordCountExpectation):
     """Expect values in a column to not match a LIKE pattern"""
 
     column: str
     pattern: str
 
 
-class ExpectColumnValuesToNotMatchLikePatternSet(CountExpectation):
+class ExpectColumnValuesToNotMatchLikePatternSet(RecordCountExpectation):
     """Expect values in a column to not match a set of LIKE patterns"""
 
     column: str
     patterns: Set[str]
 
 
-class ExpectColumnValuesToNotMatchRegex(CountExpectation):
+class ExpectColumnValuesToNotMatchRegex(RecordCountExpectation):
     """Expect values in a column to not match a RegEx pattern"""
 
     column: str
     pattern: str
 
 
-class ExpectColumnValuesToNotMatchRegexList(CountExpectation):
+class ExpectColumnValuesToNotMatchRegexList(RecordCountExpectation):
     """Expect values in a column to not match a set of RegEx patterns"""
 
     column: str

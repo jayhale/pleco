@@ -54,10 +54,10 @@ from .core.table_expectations import (
     ExpectTableColumnsToMatchOrderedList,
     ExpectTableRowCount,
 )
-from .exceptions import ExpectationNotSupportedByRunner
+from .exceptions import ExpectationFailed, ExpectationNotSupportedByRunner
 from .expectation import (
-    CountExpectation,
     Expectation,
+    RecordCountExpectation,
     Result,
     Results,
     Severity,
@@ -65,11 +65,9 @@ from .expectation import (
 )
 from .runner import Runner
 from .suite import Suite
-from .threshold import CountThreshold, ValueThreshold
+from .threshold import RecordCountThreshold, ValueThreshold
 
 __all__ = [
-    "CountExpectation",
-    "CountThreshold",
     "ExpectColumnDistinctValuesToBeInSet",
     "ExpectColumnDistinctValuesToContainSet",
     "ExpectColumnDistinctValuesToEqualSet",
@@ -121,7 +119,10 @@ __all__ = [
     "ExpectTableColumnsToMatchOrderedList",
     "ExpectTableRowCount",
     "Expectation",
+    "ExpectationFailed",
     "ExpectationNotSupportedByRunner",
+    "RecordCountExpectation",
+    "RecordCountThreshold",
     "Result",
     "Results",
     "Runner",

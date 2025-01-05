@@ -7,9 +7,11 @@ from pandas import DataFrame
 import pleco
 from pleco import (
     Expectation,
+    ExpectationFailed,
     ExpectationNotSupportedByRunner,
     Result,
     Runner,
+    Severity,
 )
 
 from .column_expectations import (
@@ -73,6 +75,11 @@ class PandasRunner(Runner):
             )
 
         handler = self._handlers[expectation.__class__]
+        result = handler(expectation, data)
+
+        if expectation.severity >= Severity.RAISE and not result.success:
+            raise ExpectationFailed(result)
+
         return handler(expectation, data)
 
     def supports(self, expectation: Union[Expectation, Type[Expectation]]) -> bool:

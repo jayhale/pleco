@@ -4,7 +4,7 @@ from pydantic import BaseModel, confloat, conint, model_validator
 from typing_extensions import Self
 
 
-class CountThreshold(BaseModel):
+class RecordCountThreshold(BaseModel):
     """Threshold for deciding if an expectation should succeed or fail base on observation counts"""
 
     count_eq: Optional[conint(ge=0)] = None

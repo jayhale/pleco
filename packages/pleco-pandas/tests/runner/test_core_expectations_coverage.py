@@ -13,14 +13,14 @@ def is_core_expectation(m: Any) -> bool:
         return False
     if m is pleco.Expectation:
         return False
-    if m is pleco.CountExpectation:
+    if m is pleco.RecordCountExpectation:
         return False
     if m is pleco.ValueExpectation:
         return False
     return True
 
 
-def test_runner_core_expectations_coverage(runner: PandasRunner):
+def test_core_expectations_coverage(runner: PandasRunner):
     core_expectations = inspect.getmembers(pleco, is_core_expectation)
     supported_expectations = [e for e in core_expectations if runner.supports(e[1])]
     unsupported_expectations = [

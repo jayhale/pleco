@@ -1,6 +1,6 @@
 from typing import List, Set
 
-from ..expectation import CountExpectation, Expectation, ValueExpectation
+from ..expectation import Expectation, RecordCountExpectation, ValueExpectation
 
 
 class ExpectColumnToExist(Expectation):
@@ -13,13 +13,13 @@ class ExpectTableColumnCount(ValueExpectation):
     """Expect the count of columns in a table"""
 
 
-class ExpectTableColumnsToMatchOrderedList(CountExpectation):
+class ExpectTableColumnsToMatchOrderedList(RecordCountExpectation):
     """Expect the columns of a table to match an ordered list"""
 
     columns: List[str]
 
 
-class ExpectTableColumnsToBeInSet(CountExpectation):
+class ExpectTableColumnsToBeInSet(RecordCountExpectation):
     """Expect the columns of a table to match"""
 
     columns: Set[str]

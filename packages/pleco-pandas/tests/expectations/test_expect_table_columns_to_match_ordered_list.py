@@ -1,12 +1,12 @@
 from pandas import DataFrame
 from pleco_pandas import PandasRunner
 
-from pleco import CountThreshold, ExpectTableColumnsToMatchOrderedList
+from pleco import ExpectTableColumnsToMatchOrderedList, RecordCountThreshold
 
 
 def test_expect_table_columns_to_match_ordered_list_succeeds(runner: PandasRunner):
     expectation = ExpectTableColumnsToMatchOrderedList(
-        threshold=CountThreshold(count_eq=0), columns=["a", "b", "c"]
+        threshold=RecordCountThreshold(count_eq=0), columns=["a", "b", "c"]
     )
     data = DataFrame({"a": [1], "b": [2], "c": [3]})
     result = runner.run_expectation(expectation, data)
@@ -18,7 +18,7 @@ def test_expect_table_columns_to_match_ordered_list_succeeds(runner: PandasRunne
 
 def test_expect_table_columns_to_match_ordered_list_fails(runner: PandasRunner):
     expectation = ExpectTableColumnsToMatchOrderedList(
-        threshold=CountThreshold(count_eq=0), columns=["a", "b", "c"]
+        threshold=RecordCountThreshold(count_eq=0), columns=["a", "b", "c"]
     )
     data = DataFrame({"a": [1], "b": [4]})
     result = runner.run_expectation(expectation, data)
