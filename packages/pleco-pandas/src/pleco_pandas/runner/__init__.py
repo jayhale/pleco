@@ -29,6 +29,7 @@ from .column_expectations import (
     expect_column_values_to_not_be_null,
 )
 from .table_expectations import (
+    expect_column_to_exist,
     expect_table_column_count,
     expect_table_columns_to_be_in_set,
     expect_table_columns_to_match_ordered_list,
@@ -59,6 +60,7 @@ class PandasRunner(Runner):
             pleco.ExpectColumnMode: expect_column_mode,
             pleco.ExpectColumnQuantile: expect_column_quantile,
             pleco.ExpectColumnSum: expect_column_sum,
+            pleco.ExpectColumnToExist: expect_column_to_exist,
             pleco.ExpectColumnValuesToBeUnique: expect_column_values_to_be_unique,
             pleco.ExpectColumnValuesToNotBeNull: expect_column_values_to_not_be_null,
             pleco.ExpectTableColumnCount: expect_table_column_count,

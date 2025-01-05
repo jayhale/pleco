@@ -58,10 +58,12 @@ from .exceptions import ExpectationFailed, ExpectationNotSupportedByRunner
 from .expectation import (
     Expectation,
     RecordCountExpectation,
+    RecordCountResult,
     Result,
     Results,
     Severity,
     ValueExpectation,
+    ValueResult,
 )
 from .runner import Runner
 from .suite import Suite
@@ -122,6 +124,7 @@ __all__ = [
     "ExpectationFailed",
     "ExpectationNotSupportedByRunner",
     "RecordCountExpectation",
+    "RecordCountResult",
     "RecordCountThreshold",
     "Result",
     "Results",
@@ -129,5 +132,6 @@ __all__ = [
     "Severity",
     "Suite",
     "ValueExpectation",
+    "ValueResult",
     "ValueThreshold",
 ]
