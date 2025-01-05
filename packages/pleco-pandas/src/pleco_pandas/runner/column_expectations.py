@@ -114,6 +114,17 @@ def expect_column_unique_value_count(
     return expectation.build_result(observation_count, observed_value)
 
 
+def expect_column_value_lengths_to_be_between(
+    expectation: pleco.ExpectColumnValueLengthsToBeBetween, data: pd.DataFrame
+) -> pleco.RecordCountResult:
+    series = data[expectation.column].astype(str)
+    observation_count = series.shape[0]
+    failure_count = (
+        ~series.str.len().between(expectation.length_min, expectation.length_max)
+    ).sum()
+    return expectation.build_result(observation_count, failure_count)
+
+
 def expect_column_values_to_be_between(
     expectation: pleco.ExpectColumnValuesToBeBetween, data: pd.DataFrame
 ) -> pleco.RecordCountResult:
