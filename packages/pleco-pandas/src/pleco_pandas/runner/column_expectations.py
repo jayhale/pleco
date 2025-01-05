@@ -105,6 +105,15 @@ def expect_column_sum(
     return expectation.build_result(observation_count, observed_value)
 
 
+def expect_column_unique_value_count(
+    expectation: pleco.ExpectColumnUniqueValueCount, data: pd.DataFrame
+) -> pleco.ValueResult:
+    series = data[expectation.column]
+    observation_count = series.shape[0]
+    observed_value = series.unique().shape[0]
+    return expectation.build_result(observation_count, observed_value)
+
+
 def expect_column_values_to_be_between(
     expectation: pleco.ExpectColumnValuesToBeBetween, data: pd.DataFrame
 ) -> pleco.RecordCountResult:
