@@ -1,18 +1,10 @@
 from inspect import isclass
-from typing import Callable, Type, Union, override
+from typing import Callable, Type, Union, overload, override
 from weakref import WeakKeyDictionary
 
 from pandas import DataFrame
 
 import pleco
-from pleco import (
-    Expectation,
-    ExpectationFailed,
-    ExpectationNotSupportedByRunner,
-    Result,
-    Runner,
-    Severity,
-)
 
 from .column_expectations import (
     expect_column_distinct_values_to_be_in_set,
@@ -43,7 +35,7 @@ from .table_expectations import (
     expect_table_row_count,
 )
 
-PandasHandler = Callable[[Expectation, DataFrame], Result]
+PandasHandler = Callable[[pleco.Expectation, DataFrame], pleco.Result]
 
 
 class HandlerAlreadyRegistered(RuntimeError):
@@ -52,7 +44,7 @@ class HandlerAlreadyRegistered(RuntimeError):
     pass
 
 
-class PandasRunner(Runner):
+class PandasRunner(pleco.Runner):
     """Run expectations against a Pandas DataFrame"""
 
     _handlers = WeakKeyDictionary(
@@ -84,29 +76,41 @@ class PandasRunner(Runner):
         }
     )
 
+    @overload
+    def run_expectation(
+        self, expectation: pleco.ValueExpectation, data: DataFrame
+    ) -> pleco.ValueResult:
+        pass
+
     @override
-    def run_expectation(self, expectation: Expectation, data: DataFrame) -> Result:
+    def run_expectation(
+        self, expectation: pleco.Expectation, data: DataFrame
+    ) -> pleco.Result:
         if expectation.__class__ not in self._handlers:
-            raise ExpectationNotSupportedByRunner(
+            raise pleco.ExpectationNotSupportedByRunner(
                 f"expectation {type(expectation)} is not supported by PandasRunner"
             )
 
         handler = self._handlers[expectation.__class__]
         result = handler(expectation, data)
 
-        if expectation.severity >= Severity.RAISE and not result.success:
-            raise ExpectationFailed(result)
+        if expectation.severity >= pleco.Severity.RAISE and not result.success:
+            raise pleco.ExpectationFailed(result)
 
         return handler(expectation, data)
 
     @override
-    def supports(self, expectation: Union[Expectation, Type[Expectation]]) -> bool:
+    def supports(
+        self, expectation: Union[pleco.Expectation, Type[pleco.Expectation]]
+    ) -> bool:
         if isclass(expectation):
             return expectation in self._handlers
         return expectation.__class__ in self._handlers
 
     def add_handler(
-        self, expectation: Union[Expectation, Type[Expectation]], handler: PandasHandler
+        self,
+        expectation: Union[pleco.Expectation, Type[pleco.Expectation]],
+        handler: PandasHandler,
     ) -> None:
         """Add an expectation handler to the runner instance"""
         klass = expectation if isclass(expectation) else type(expectation)
@@ -117,7 +121,7 @@ class PandasRunner(Runner):
         self._handlers[klass] = handler
 
     def remove_handler(
-        self, expectation: Union[Expectation, Type[Expectation]]
+        self, expectation: Union[pleco.Expectation, Type[pleco.Expectation]]
     ) -> None:
         """Remove an expectation handler from a runner instance"""
         klass = expectation if isclass(expectation) else type(expectation)
@@ -125,7 +129,9 @@ class PandasRunner(Runner):
             del self._handlers[klass]
 
     def replace_handler(
-        self, expectation: Union[Expectation, Type[Expectation]], handler: PandasHandler
+        self,
+        expectation: Union[pleco.Expectation, Type[pleco.Expectation]],
+        handler: PandasHandler,
     ) -> None:
         """Replace an expectation handler in the runner instance"""
         self.remove_handler(expectation)
