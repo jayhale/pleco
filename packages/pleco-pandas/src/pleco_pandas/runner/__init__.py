@@ -1,5 +1,5 @@
 from inspect import isclass
-from typing import Callable, Type, Union
+from typing import Callable, Type, Union, override
 from weakref import WeakKeyDictionary
 
 from pandas import DataFrame
@@ -27,6 +27,7 @@ from .column_expectations import (
     expect_column_sum,
     expect_column_unique_value_count,
     expect_column_value_lengths_to_be_between,
+    expect_column_value_lengths_to_equal,
     expect_column_values_to_be_between,
     expect_column_values_to_be_null,
     expect_column_values_to_be_unique,
@@ -68,6 +69,7 @@ class PandasRunner(Runner):
             pleco.ExpectColumnToExist: expect_column_to_exist,
             pleco.ExpectColumnUniqueValueCount: expect_column_unique_value_count,
             pleco.ExpectColumnValueLengthsToBeBetween: expect_column_value_lengths_to_be_between,
+            pleco.ExpectColumnValueLengthsToEqual: expect_column_value_lengths_to_equal,
             pleco.ExpectColumnValuesToBeBetween: expect_column_values_to_be_between,
             pleco.ExpectColumnValuesToBeNull: expect_column_values_to_be_null,
             pleco.ExpectColumnValuesToBeUnique: expect_column_values_to_be_unique,
@@ -80,6 +82,7 @@ class PandasRunner(Runner):
         }
     )
 
+    @override
     def run_expectation(self, expectation: Expectation, data: DataFrame) -> Result:
         if expectation.__class__ not in self._handlers:
             raise ExpectationNotSupportedByRunner(
@@ -94,6 +97,7 @@ class PandasRunner(Runner):
 
         return handler(expectation, data)
 
+    @override
     def supports(self, expectation: Union[Expectation, Type[Expectation]]) -> bool:
         if isclass(expectation):
             return expectation in self._handlers
@@ -102,6 +106,7 @@ class PandasRunner(Runner):
     def add_handler(
         self, expectation: Union[Expectation, Type[Expectation]], handler: PandasHandler
     ) -> None:
+        """Add an expectation handler to the runner instance"""
         klass = expectation if isclass(expectation) else type(expectation)
         if klass in self._handlers:
             raise HandlerAlreadyRegistered(
@@ -112,6 +117,7 @@ class PandasRunner(Runner):
     def remove_handler(
         self, expectation: Union[Expectation, Type[Expectation]]
     ) -> None:
+        """Remove an expectation handler from a runner instance"""
         klass = expectation if isclass(expectation) else type(expectation)
         if klass in self._handlers:
             del self._handlers[klass]
@@ -119,5 +125,6 @@ class PandasRunner(Runner):
     def replace_handler(
         self, expectation: Union[Expectation, Type[Expectation]], handler: PandasHandler
     ) -> None:
+        """Replace an expectation handler in the runner instance"""
         self.remove_handler(expectation)
         self.add_handler(expectation, handler)

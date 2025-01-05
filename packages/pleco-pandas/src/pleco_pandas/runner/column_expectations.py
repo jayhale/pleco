@@ -125,6 +125,15 @@ def expect_column_value_lengths_to_be_between(
     return expectation.build_result(observation_count, failure_count)
 
 
+def expect_column_value_lengths_to_equal(
+    expectation: pleco.ExpectColumnValueLengthsToEqual, data: pd.DataFrame
+) -> pleco.RecordCountResult:
+    series = data[expectation.column].astype(str)
+    observation_count = series.shape[0]
+    failure_count = (series.str.len() != expectation.length).sum()
+    return expectation.build_result(observation_count, failure_count)
+
+
 def expect_column_values_to_be_between(
     expectation: pleco.ExpectColumnValuesToBeBetween, data: pd.DataFrame
 ) -> pleco.RecordCountResult:
