@@ -1,13 +1,11 @@
 from pandas import DataFrame
 from pleco_pandas import PandasRunner
 
-from pleco import ExpectColumnDistinctValuesToContainSet
+from pleco import ExpectColumnValuesToContainSet
 
 
 def test_expect_column_values_to_contain_set_succeeds(runner: PandasRunner):
-    expectation = ExpectColumnDistinctValuesToContainSet(
-        column="a", value_set={1, 2, 3}
-    )
+    expectation = ExpectColumnValuesToContainSet(column="a", value_set={1, 2, 3})
     data = DataFrame({"a": [1, 2, 3, 4]})
     result = runner.run_expectation(expectation, data)
     assert result.success is True
@@ -17,9 +15,7 @@ def test_expect_column_values_to_contain_set_succeeds(runner: PandasRunner):
 
 
 def test_expect_column_values_to_contain_set_fails(runner: PandasRunner):
-    expectation = ExpectColumnDistinctValuesToContainSet(
-        column="a", value_set={1, 2, 3}
-    )
+    expectation = ExpectColumnValuesToContainSet(column="a", value_set={1, 2, 3})
     data = DataFrame({"a": [1, 2, 4]})
     result = runner.run_expectation(expectation, data)
     assert result.success is False

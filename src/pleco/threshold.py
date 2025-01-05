@@ -4,13 +4,15 @@ from pydantic import BaseModel, confloat, conint, model_validator
 from typing_extensions import Self
 
 
-class CountThreshold(BaseModel):
+class RecordCountThreshold(BaseModel):
     """Threshold for deciding if an expectation should succeed or fail base on observation counts"""
 
+    count_eq: Optional[conint(ge=0)] = None
     count_gt: Optional[conint(ge=0)] = None
     count_ge: Optional[conint(ge=0)] = None
     count_lt: Optional[conint(ge=0)] = None
     count_le: Optional[conint(ge=0)] = None
+    percent_eq: Optional[confloat(ge=0)] = None
     percent_gt: Optional[confloat(ge=0)] = None
     percent_ge: Optional[confloat(ge=0)] = None
     percent_lt: Optional[confloat(ge=0)] = None
@@ -18,6 +20,8 @@ class CountThreshold(BaseModel):
 
     @model_validator(mode="after")
     def validate_at_least_one_constraint(self) -> Self:
+        if self.count_eq is not None:
+            return self
         if self.count_gt is not None:
             return self
         if self.count_ge is not None:
@@ -25,6 +29,8 @@ class CountThreshold(BaseModel):
         if self.count_lt is not None:
             return self
         if self.count_le is not None:
+            return self
+        if self.percent_eq is not None:
             return self
         if self.percent_gt is not None:
             return self
@@ -40,6 +46,9 @@ class CountThreshold(BaseModel):
         )
 
     def test(self, failure_count: int, failure_percent: float) -> bool:
+        if self.count_eq is not None:
+            if not failure_count == self.count_eq:
+                return False
         if self.count_gt is not None:
             if not failure_count > self.count_gt:
                 return False
@@ -51,6 +60,9 @@ class CountThreshold(BaseModel):
                 return False
         if self.count_le is not None:
             if not failure_count <= self.count_le:
+                return False
+        if self.percent_eq is not None:
+            if not failure_percent == self.percent_eq:
                 return False
         if self.percent_gt is not None:
             if not failure_percent > self.percent_gt:

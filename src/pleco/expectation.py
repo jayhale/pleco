@@ -1,36 +1,50 @@
-from abc import ABC, abstractmethod
 from enum import IntEnum
 from typing import List, Optional, Union
 
 from pydantic import BaseModel, confloat, conint
 
-from .threshold import CountThreshold, ValueThreshold
+from .threshold import RecordCountThreshold, ValueThreshold
 
 
 class Severity(IntEnum):
+    """The severity of an expectation failure"""
+
     WARN = 10
     ERROR = 20
     RAISE = 30
 
 
-class Expectation(BaseModel, ABC):
+class Result(BaseModel):
+    """The result of an expectation evaluation"""
+
+    expectation: "Expectation"
+    success: bool
+    observation_count: conint(ge=0)
+
+
+class RecordCountResult(Result):
+    """The result of an expectation evaluation that counts records"""
+
+    failure_count: Optional[conint(ge=0)] = None
+    failure_percent: Optional[confloat(ge=0)] = None
+
+
+class ValueResult(Result):
+    """The result of an expectation evaluation that computes a value"""
+
+    observed_value: Optional[Union[int, float]] = None
+
+
+class Expectation(BaseModel):
     """A generic expectation"""
 
     severity: Severity = Severity.WARN
 
-    @abstractmethod
-    def build_result(self, *args, **kwargs) -> "Result":
+    def build_result(self, success: bool, observation_count: int) -> Result:
         """Build a result after the expectation has been evaluated"""
-        pass
-
-
-class Result(BaseModel):
-    expectation: Expectation
-    success: bool
-    observation_count: conint(ge=0)
-    observed_value: Optional[Union[int, float]] = None
-    failure_count: Optional[conint(ge=0)] = None
-    failure_percent: Optional[confloat(ge=0)] = None
+        return Result(
+            expectation=self, success=success, observation_count=observation_count
+        )
 
 
 class Results(BaseModel):
@@ -46,18 +60,20 @@ class Results(BaseModel):
             self.success = False
 
 
-class CountExpectation(Expectation):
+class RecordCountExpectation(Expectation):
     """A generic observation-count expectation"""
 
-    threshold: CountThreshold = CountThreshold(count_le=0)
+    threshold: RecordCountThreshold = RecordCountThreshold(count_le=0)
 
-    def build_result(self, observation_count: int, failure_count: int) -> Result:
+    def build_result(
+        self, observation_count: int, failure_count: int
+    ) -> RecordCountResult:
         """Build a result from observation and failure counts"""
 
         failure_percent = failure_count / observation_count * 100
         success = self.threshold.test(failure_count, failure_percent)
 
-        return Result(
+        return RecordCountResult(
             expectation=self,
             success=success,
             observation_count=observation_count,
@@ -71,10 +87,12 @@ class ValueExpectation(Expectation):
 
     threshold: ValueThreshold = ValueThreshold(le=0)
 
-    def build_result(self, observation_count: int, value: Union[int, float]) -> Result:
+    def build_result(
+        self, observation_count: int, value: Union[int, float]
+    ) -> ValueResult:
         success = self.threshold.test(value)
 
-        return Result(
+        return ValueResult(
             expectation=self,
             success=success,
             observation_count=observation_count,

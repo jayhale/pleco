@@ -1,7 +1,4 @@
 from .core.column_expectations import (
-    ExpectColumnDistinctValuesToBeInSet,
-    ExpectColumnDistinctValuesToContainSet,
-    ExpectColumnDistinctValuesToEqualSet,
     ExpectColumnKLDivergence,
     ExpectColumnMax,
     ExpectColumnMean,
@@ -12,7 +9,6 @@ from .core.column_expectations import (
     ExpectColumnQuantile,
     ExpectColumnStandardDeviation,
     ExpectColumnSum,
-    ExpectColumnToExist,
     ExpectColumnUniqueValueCount,
     ExpectColumnValueLengthsToBeBetween,
     ExpectColumnValueLengthsToEqual,
@@ -25,6 +21,8 @@ from .core.column_expectations import (
     ExpectColumnValuesToBeNull,
     ExpectColumnValuesToBeOfType,
     ExpectColumnValuesToBeUnique,
+    ExpectColumnValuesToContainSet,
+    ExpectColumnValuesToEqualSet,
     ExpectColumnValuesToMatchJsonSchema,
     ExpectColumnValuesToMatchLikePattern,
     ExpectColumnValuesToMatchLikePatternSet,
@@ -44,35 +42,33 @@ from .core.multi_column_expectations import (
     ExpectColumnPairValuesToBeEqual,
     ExpectColumnPairValuesToBeInSet,
     ExpectCompoundColumnsToBeUnique,
-    ExpectMulticolumnSum,
-    ExpectMulticolumnValuesToBeUnique,
-    ExpectMulticolumnValuesToBeUniqueWithinRecord,
+    ExpectMultiColumnSum,
+    ExpectMultiColumnValuesToBeUnique,
+    ExpectMultiColumnValuesToBeUniqueWithinRecord,
 )
 from .core.table_expectations import (
+    ExpectColumnToExist,
     ExpectTableColumnCount,
     ExpectTableColumnsToBeInSet,
     ExpectTableColumnsToMatchOrderedList,
     ExpectTableRowCount,
 )
-from .exceptions import ExpectationNotSupportedByRunner
+from .exceptions import ExpectationFailed, ExpectationNotSupportedByRunner
 from .expectation import (
-    CountExpectation,
     Expectation,
+    RecordCountExpectation,
+    RecordCountResult,
     Result,
     Results,
     Severity,
     ValueExpectation,
+    ValueResult,
 )
 from .runner import Runner
 from .suite import Suite
-from .threshold import CountThreshold, ValueThreshold
+from .threshold import RecordCountThreshold, ValueThreshold
 
 __all__ = [
-    "CountExpectation",
-    "CountThreshold",
-    "ExpectColumnDistinctValuesToBeInSet",
-    "ExpectColumnDistinctValuesToContainSet",
-    "ExpectColumnDistinctValuesToEqualSet",
     "ExpectColumnKLDivergence",
     "ExpectColumnMax",
     "ExpectColumnMean",
@@ -100,6 +96,8 @@ __all__ = [
     "ExpectColumnValuesToBeNull",
     "ExpectColumnValuesToBeOfType",
     "ExpectColumnValuesToBeUnique",
+    "ExpectColumnValuesToContainSet",
+    "ExpectColumnValuesToEqualSet",
     "ExpectColumnValuesToMatchJsonSchema",
     "ExpectColumnValuesToMatchLikePattern",
     "ExpectColumnValuesToMatchLikePatternSet",
@@ -113,20 +111,25 @@ __all__ = [
     "ExpectColumnValuesToNotMatchRegex",
     "ExpectColumnValuesToNotMatchRegexList",
     "ExpectCompoundColumnsToBeUnique",
-    "ExpectMulticolumnSum",
-    "ExpectMulticolumnValuesToBeUnique",
-    "ExpectMulticolumnValuesToBeUniqueWithinRecord",
+    "ExpectMultiColumnSum",
+    "ExpectMultiColumnValuesToBeUnique",
+    "ExpectMultiColumnValuesToBeUniqueWithinRecord",
     "ExpectTableColumnCount",
     "ExpectTableColumnsToBeInSet",
     "ExpectTableColumnsToMatchOrderedList",
     "ExpectTableRowCount",
     "Expectation",
+    "ExpectationFailed",
     "ExpectationNotSupportedByRunner",
+    "RecordCountExpectation",
+    "RecordCountResult",
+    "RecordCountThreshold",
     "Result",
     "Results",
     "Runner",
     "Severity",
     "Suite",
     "ValueExpectation",
+    "ValueResult",
     "ValueThreshold",
 ]
