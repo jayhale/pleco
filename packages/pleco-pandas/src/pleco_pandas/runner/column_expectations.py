@@ -96,6 +96,15 @@ def expect_column_quantile(
     return expectation.build_result(observation_count, observed_value)
 
 
+def expect_column_sum(
+    expectation: pleco.ExpectColumnSum, data: pd.DataFrame
+) -> pleco.Result:
+    series = data[expectation.column]
+    observation_count = series.shape[0]
+    observed_value = series.sum()
+    return expectation.build_result(observation_count, observed_value)
+
+
 def expect_column_values_to_be_unique(
     expectation: pleco.ExpectColumnValuesToBeUnique, data: pd.DataFrame
 ) -> pleco.Result:
