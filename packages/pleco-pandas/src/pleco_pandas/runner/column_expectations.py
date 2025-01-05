@@ -143,6 +143,15 @@ def expect_column_values_to_be_unique(
     return expectation.build_result(observation_count, failure_count)
 
 
+def expect_column_values_to_not_be_in_set(
+    expectation: pleco.ExpectColumnValuesToNotBeInSet, data: pd.DataFrame
+) -> pleco.RecordCountResult:
+    series = data[expectation.column]
+    observation_count = series.shape[0]
+    failure_count = series.isin(expectation.value_set).sum()
+    return expectation.build_result(observation_count, failure_count)
+
+
 def expect_column_values_to_not_be_null(
     expectation: pleco.ExpectColumnValuesToNotBeNull, data: pd.DataFrame
 ) -> pleco.RecordCountResult:
