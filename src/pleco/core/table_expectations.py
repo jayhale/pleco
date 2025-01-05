@@ -1,6 +1,12 @@
 from typing import List, Set
 
-from ..expectation import CountExpectation, ValueExpectation
+from ..expectation import CountExpectation, Expectation, ValueExpectation
+
+
+class ExpectColumnToExist(Expectation):
+    """Expect the data source to have a column"""
+
+    column: str
 
 
 class ExpectTableColumnCount(ValueExpectation):

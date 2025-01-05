@@ -1,6 +1,6 @@
 from typing import Any, Optional, Set
 
-from ..expectation import CountExpectation, Expectation, ValueExpectation
+from ..expectation import CountExpectation, ValueExpectation
 
 
 class ExpectColumnDistinctValuesToBeInSet(CountExpectation):
@@ -81,12 +81,6 @@ class ExpectColumnStandardDeviation(ValueExpectation):
 
 class ExpectColumnSum(ValueExpectation):
     """Expect a sum of a column"""
-
-    column: str
-
-
-class ExpectColumnToExist(Expectation):
-    """Expect the data source to have a column"""
 
     column: str
 

@@ -12,7 +12,6 @@ from .core.column_expectations import (
     ExpectColumnQuantile,
     ExpectColumnStandardDeviation,
     ExpectColumnSum,
-    ExpectColumnToExist,
     ExpectColumnUniqueValueCount,
     ExpectColumnValueLengthsToBeBetween,
     ExpectColumnValueLengthsToEqual,
@@ -49,6 +48,7 @@ from .core.multi_column_expectations import (
     ExpectMulticolumnValuesToBeUniqueWithinRecord,
 )
 from .core.table_expectations import (
+    ExpectColumnToExist,
     ExpectTableColumnCount,
     ExpectTableColumnsToBeInSet,
     ExpectTableColumnsToMatchOrderedList,
