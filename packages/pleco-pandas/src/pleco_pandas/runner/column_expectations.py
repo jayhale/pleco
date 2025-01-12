@@ -6,7 +6,7 @@ import pleco
 
 def expect_column_distinct_values_to_be_in_set(
     expectation: pleco.ExpectColumnValuesToBeInSet, data: pd.DataFrame
-) -> pleco.RecordCountResult:
+) -> pleco.CountResult:
     series = data[expectation.column]
     observation_count = series.shape[0]
     failure_count = (~series.isin(expectation.value_set)).sum()
@@ -15,7 +15,7 @@ def expect_column_distinct_values_to_be_in_set(
 
 def expect_column_distinct_values_to_contain_set(
     expectation: pleco.ExpectColumnValuesToContainSet, data: pd.DataFrame
-) -> pleco.RecordCountResult:
+) -> pleco.CountResult:
     series = data[expectation.column]
     observed_set = series.unique()
     observation_count = observed_set.shape[0]
@@ -27,7 +27,7 @@ def expect_column_distinct_values_to_contain_set(
 
 def expect_column_distinct_values_to_equal_set(
     expectation: pleco.ExpectColumnValuesToEqualSet, data: pd.DataFrame
-) -> pleco.RecordCountResult:
+) -> pleco.CountResult:
     series = data[expectation.column]
     observed_set = series.unique()
     observation_count = observed_set.shape[0]
@@ -125,7 +125,7 @@ def expect_column_unique_value_count(
 
 def expect_column_value_lengths_to_be_between(
     expectation: pleco.ExpectColumnValueLengthsToBeBetween, data: pd.DataFrame
-) -> pleco.RecordCountResult:
+) -> pleco.CountResult:
     series = data[expectation.column].astype(str)
     observation_count = series.shape[0]
     failure_count = (
@@ -136,7 +136,7 @@ def expect_column_value_lengths_to_be_between(
 
 def expect_column_value_lengths_to_equal(
     expectation: pleco.ExpectColumnValueLengthsToEqual, data: pd.DataFrame
-) -> pleco.RecordCountResult:
+) -> pleco.CountResult:
     series = data[expectation.column].astype(str)
     observation_count = series.shape[0]
     failure_count = (series.str.len() != expectation.length).sum()
@@ -145,7 +145,7 @@ def expect_column_value_lengths_to_equal(
 
 def expect_column_values_to_be_between(
     expectation: pleco.ExpectColumnValuesToBeBetween, data: pd.DataFrame
-) -> pleco.RecordCountResult:
+) -> pleco.CountResult:
     series = data[expectation.column]
     observation_count = series.shape[0]
     failure_count = (
@@ -156,7 +156,7 @@ def expect_column_values_to_be_between(
 
 def expect_column_values_to_be_null(
     expectation: pleco.ExpectColumnValuesToBeNull, data: pd.DataFrame
-) -> pleco.RecordCountResult:
+) -> pleco.CountResult:
     series = data[expectation.column]
     observation_count = series.shape[0]
     failure_count = (~series.isnull()).sum()
@@ -165,7 +165,7 @@ def expect_column_values_to_be_null(
 
 def expect_column_values_to_be_unique(
     expectation: pleco.ExpectColumnValuesToBeUnique, data: pd.DataFrame
-) -> pleco.RecordCountResult:
+) -> pleco.CountResult:
     series = data[expectation.column]
     observation_count = series.shape[0]
     failure_count = series.duplicated(keep=False).sum()
@@ -174,7 +174,7 @@ def expect_column_values_to_be_unique(
 
 def expect_column_values_to_not_be_in_set(
     expectation: pleco.ExpectColumnValuesToNotBeInSet, data: pd.DataFrame
-) -> pleco.RecordCountResult:
+) -> pleco.CountResult:
     series = data[expectation.column]
     observation_count = series.shape[0]
     failure_count = series.isin(expectation.value_set).sum()
@@ -183,7 +183,7 @@ def expect_column_values_to_not_be_in_set(
 
 def expect_column_values_to_not_be_null(
     expectation: pleco.ExpectColumnValuesToNotBeNull, data: pd.DataFrame
-) -> pleco.RecordCountResult:
+) -> pleco.CountResult:
     series = data[expectation.column]
     observation_count = series.shape[0]
     failure_count = series.isnull().sum()

@@ -1,3 +1,4 @@
+from .constraint import Constraint
 from .core.column_expectations import (
     ExpectColumnKLDivergence,
     ExpectColumnMax,
@@ -55,9 +56,9 @@ from .core.table_expectations import (
 )
 from .exceptions import ExpectationFailed, ExpectationNotSupportedByRunner
 from .expectation import (
+    CountExpectation,
+    CountResult,
     Expectation,
-    RecordCountExpectation,
-    RecordCountResult,
     Result,
     Results,
     Severity,
@@ -66,9 +67,11 @@ from .expectation import (
 )
 from .runner import Runner
 from .suite import Suite
-from .threshold import RecordCountThreshold, ValueThreshold
 
 __all__ = [
+    "Constraint",
+    "CountExpectation",
+    "CountResult",
     "ExpectColumnKLDivergence",
     "ExpectColumnMax",
     "ExpectColumnMean",
@@ -121,9 +124,6 @@ __all__ = [
     "Expectation",
     "ExpectationFailed",
     "ExpectationNotSupportedByRunner",
-    "RecordCountExpectation",
-    "RecordCountResult",
-    "RecordCountThreshold",
     "Result",
     "Results",
     "Runner",
@@ -131,5 +131,4 @@ __all__ = [
     "Suite",
     "ValueExpectation",
     "ValueResult",
-    "ValueThreshold",
 ]

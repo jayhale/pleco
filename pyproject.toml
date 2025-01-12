@@ -3,6 +3,7 @@ name = "pleco"
 version = "0.0.0"
 description = "Straightforward data validation"
 readme = "README.md"
+license = "MIT"
 authors = [
     { name = "James Hale", email = "james+pleco@hale.zip" }
 ]
@@ -14,6 +15,9 @@ dependencies = [
 [dependency-groups]
 dev = [
     "pytest>=8.3.4",
+    "sphinx>=7.4.7",
+    "sphinx-autobuild>=2024.10.3",
+    "sphinx-rtd-theme>=3.0.2",
 ]
 
 [build-system]
@@ -21,7 +25,7 @@ requires = ["hatchling"]
 build-backend = "hatchling.build"
 
 [tool.ruff.lint]
-extend-select = ["I", "RUF022"]
+extend-select = ["E", "I", "RUF022"]
 
 [tool.uv.workspace]
 members = ["packages/pleco-pandas"]

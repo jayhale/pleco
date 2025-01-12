@@ -22,7 +22,7 @@ def expect_table_column_count(
 
 def expect_table_columns_to_be_in_set(
     expectation: pleco.ExpectTableColumnsToBeInSet, data: pd.DataFrame
-) -> pleco.RecordCountResult:
+) -> pleco.CountResult:
     observation_count = data.shape[1]
     observed_columns = set(data.columns)
     failure_count = len(observed_columns.difference(expectation.columns))
@@ -31,7 +31,7 @@ def expect_table_columns_to_be_in_set(
 
 def expect_table_columns_to_match_ordered_list(
     expectation: pleco.ExpectTableColumnsToMatchOrderedList, data: pd.DataFrame
-) -> pleco.RecordCountResult:
+) -> pleco.CountResult:
     observation_count = data.shape[1]
     observed_columns = data.columns
     failure_count = 0

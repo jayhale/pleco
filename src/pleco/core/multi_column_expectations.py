@@ -1,23 +1,23 @@
 from typing import Any, List, Set, Tuple
 
-from ..expectation import RecordCountExpectation, ValueExpectation
+from ..expectation import CountExpectation, ValueExpectation
 
 
-class ExpectColumnPairValuesAToBeGreaterThanB(RecordCountExpectation):
+class ExpectColumnPairValuesAToBeGreaterThanB(CountExpectation):
     """Expect values in column A to be greater than column B"""
 
     column_a: str
     column_b: str
 
 
-class ExpectColumnPairValuesToBeEqual(RecordCountExpectation):
+class ExpectColumnPairValuesToBeEqual(CountExpectation):
     """Expect values in column A to be equal to column B"""
 
     column_a: str
     column_b: str
 
 
-class ExpectColumnPairValuesToBeInSet(RecordCountExpectation):
+class ExpectColumnPairValuesToBeInSet(CountExpectation):
     """Expect pair values in column A and B to be in a set"""
 
     column_a: str
@@ -25,7 +25,7 @@ class ExpectColumnPairValuesToBeInSet(RecordCountExpectation):
     value_set: Set[Tuple[Any, Any]]
 
 
-class ExpectCompoundColumnsToBeUnique(RecordCountExpectation):
+class ExpectCompoundColumnsToBeUnique(CountExpectation):
     """Expect a compound set of columns to be unique together"""
 
     columns: List[str]
@@ -37,13 +37,13 @@ class ExpectMultiColumnSum(ValueExpectation):
     columns: List[str]
 
 
-class ExpectMultiColumnValuesToBeUnique(RecordCountExpectation):
+class ExpectMultiColumnValuesToBeUnique(CountExpectation):
     """Expect values from multiple columns to be unique"""
 
     columns: List[str]
 
 
-class ExpectMultiColumnValuesToBeUniqueWithinRecord(RecordCountExpectation):
+class ExpectMultiColumnValuesToBeUniqueWithinRecord(CountExpectation):
     """Expect the values from specified columns to be unique within the row"""
 
     columns: List[str]

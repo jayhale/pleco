@@ -13,7 +13,7 @@ def is_core_expectation(m: Any) -> bool:
         return False
     if m is pleco.Expectation:
         return False
-    if m is pleco.RecordCountExpectation:
+    if m is pleco.CountExpectation:
         return False
     if m is pleco.ValueExpectation:
         return False

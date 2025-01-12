@@ -1,6 +1,6 @@
 from pleco_pandas import PandasRunner
 
-from pleco import ExpectColumnValuesToBeUnique, RecordCountExpectation
+from pleco import CountExpectation, ExpectColumnValuesToBeUnique
 
 
 def test_supports_class_succeeds(runner: PandasRunner):
@@ -9,7 +9,7 @@ def test_supports_class_succeeds(runner: PandasRunner):
 
 
 def test_supports_class_fails(runner: PandasRunner):
-    class UnsupportedExpectation(RecordCountExpectation):
+    class UnsupportedExpectation(CountExpectation):
         pass
 
     assert not runner.supports(UnsupportedExpectation())
@@ -22,7 +22,7 @@ def test_supports_instance_succeeds(runner: PandasRunner):
 
 
 def test_supports_instance_fails(runner: PandasRunner):
-    class UnsupportedExpectation(RecordCountExpectation):
+    class UnsupportedExpectation(CountExpectation):
         pass
 
     assert not runner.supports(UnsupportedExpectation())

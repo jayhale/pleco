@@ -50,9 +50,9 @@ class PandasRunner(pleco.Runner):
 
     _handlers = WeakKeyDictionary(
         {
-            pleco.ExpectColumnValuesToBeInSet: expect_column_distinct_values_to_be_in_set,
-            pleco.ExpectColumnValuesToContainSet: expect_column_distinct_values_to_contain_set,
-            pleco.ExpectColumnValuesToEqualSet: expect_column_distinct_values_to_equal_set,
+            pleco.ExpectColumnValuesToBeInSet: expect_column_distinct_values_to_be_in_set,  # noqa: E501
+            pleco.ExpectColumnValuesToContainSet: expect_column_distinct_values_to_contain_set,  # noqa: E501
+            pleco.ExpectColumnValuesToEqualSet: expect_column_distinct_values_to_equal_set,  # noqa: E501
             pleco.ExpectColumnMax: expect_column_max,
             pleco.ExpectColumnMean: expect_column_mean,
             pleco.ExpectColumnMedian: expect_column_median,
@@ -63,7 +63,7 @@ class PandasRunner(pleco.Runner):
             pleco.ExpectColumnSum: expect_column_sum,
             pleco.ExpectColumnToExist: expect_column_to_exist,
             pleco.ExpectColumnUniqueValueCount: expect_column_unique_value_count,
-            pleco.ExpectColumnValueLengthsToBeBetween: expect_column_value_lengths_to_be_between,
+            pleco.ExpectColumnValueLengthsToBeBetween: expect_column_value_lengths_to_be_between,  # noqa: E501
             pleco.ExpectColumnValueLengthsToEqual: expect_column_value_lengths_to_equal,
             pleco.ExpectColumnValuesToBeBetween: expect_column_values_to_be_between,
             pleco.ExpectColumnValuesToBeNull: expect_column_values_to_be_null,
@@ -73,15 +73,15 @@ class PandasRunner(pleco.Runner):
             pleco.ExpectMultiColumnSum: expect_multi_column_sum,
             pleco.ExpectTableColumnCount: expect_table_column_count,
             pleco.ExpectTableColumnsToBeInSet: expect_table_columns_to_be_in_set,
-            pleco.ExpectTableColumnsToMatchOrderedList: expect_table_columns_to_match_ordered_list,
+            pleco.ExpectTableColumnsToMatchOrderedList: expect_table_columns_to_match_ordered_list,  # noqa: E501
             pleco.ExpectTableRowCount: expect_table_row_count,
         }
     )
 
     @overload
     def run_expectation(
-        self, expectation: pleco.RecordCountExpectation, data: DataFrame
-    ) -> pleco.RecordCountResult:
+        self, expectation: pleco.CountExpectation, data: DataFrame
+    ) -> pleco.CountResult:
         pass
 
     @overload
