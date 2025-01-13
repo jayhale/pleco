@@ -6,5 +6,6 @@ Pleco
    :maxdepth: 2
    :caption: Contents:
 
+   expectations
    api
 
