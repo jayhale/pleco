@@ -242,7 +242,7 @@ class ExpectColumnValuesToNotMatchRegex(CountExpectation):
     pattern: str
 
 
-class ExpectColumnValuesToNotMatchRegexList(CountExpectation):
+class ExpectColumnValuesToNotMatchRegexSet(CountExpectation):
     """Expect values in a column to not match a set of RegEx patterns"""
 
     column: str

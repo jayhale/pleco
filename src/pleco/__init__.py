@@ -35,7 +35,7 @@ from .core.column_expectations import (
     ExpectColumnValuesToNotMatchLikePattern,
     ExpectColumnValuesToNotMatchLikePatternSet,
     ExpectColumnValuesToNotMatchRegex,
-    ExpectColumnValuesToNotMatchRegexList,
+    ExpectColumnValuesToNotMatchRegexSet,
     ExpectColumnValueZScoresToBeBetween,
 )
 from .core.multi_column_expectations import (
@@ -112,7 +112,7 @@ __all__ = [
     "ExpectColumnValuesToNotMatchLikePattern",
     "ExpectColumnValuesToNotMatchLikePatternSet",
     "ExpectColumnValuesToNotMatchRegex",
-    "ExpectColumnValuesToNotMatchRegexList",
+    "ExpectColumnValuesToNotMatchRegexSet",
     "ExpectCompoundColumnsToBeUnique",
     "ExpectMultiColumnSum",
     "ExpectMultiColumnValuesToBeUnique",

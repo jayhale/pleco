@@ -2,10 +2,10 @@
 
 .. py:currentmodule:: pleco
 
-=================
-Expect Column Max
-=================
+==================
+Expect Column Mean
+==================
 
-.. autoclass:: ExpectColumnMax
+.. autoclass:: ExpectColumnMean
     :members:
     :exclude-members: model_config

@@ -3,9 +3,9 @@
 .. py:currentmodule:: pleco
 
 =================
-Expect Column Max
+Expect Column Sum
 =================
 
-.. autoclass:: ExpectColumnMax
+.. autoclass:: ExpectColumnSum
     :members:
     :exclude-members: model_config
